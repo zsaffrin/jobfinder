@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { jobfinderTheme } from '../../themes';
 
 import Header from './Header/Header';
+import Content from './Content/Content';
 
 const App = () => {
   const AppLayout = styled.div`
@@ -16,7 +17,7 @@ const App = () => {
     <ThemeProvider theme={jobfinderTheme}>
       <AppLayout>
         <Header />
-        <div>New jobfinder app</div>
+        <Content />
       </AppLayout>
     </ThemeProvider>
   );
