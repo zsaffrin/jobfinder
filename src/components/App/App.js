@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import 'firebase/auth';
 
 import { jobfinderTheme } from '../../themes';
+import './fontAwesome';
 
 import Header from './Header/Header';
 import Content from './Content/Content';
