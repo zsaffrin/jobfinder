@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { loadJobs, useSystemJobs } from '../../../../../utils/dataUtils';
+import { useSystemJobs, getAllJobs } from '../../../../../utils/dataUtils';
 import LoadingIcon from '../../../../shared/LoadingIcon';
 
 const LiveJobs = ({ user }) => {
@@ -10,7 +10,7 @@ const LiveJobs = ({ user }) => {
 
   const refreshLiveJobs = () => {
     setIsLoadingLiveJobs(true);
-    loadJobs()
+    getAllJobs()
       .then(res => {
         setLiveJobs(res);
         setIsLoadingLiveJobs(false);

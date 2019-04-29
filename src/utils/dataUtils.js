@@ -1,14 +1,54 @@
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 
-export async function loadJobs() {
-  return await fetch('http://localhost:4382/api/jobs')
+export async function fetchFromUrl(url) {
+  return await fetch(url)
     .then(async res => {
       return await res.json();
     })
     .catch(err => {
       throw new Error(err);
     });
+}
+
+export async function getAllJobs() {
+  return [...(await getCodepenJobs()), ...(await getWorkingNomadsJobs())];
+}
+
+export async function getCodepenJobs() {
+  const jobData = await fetchFromUrl('https://codepen.io/jobs.json');
+  const formattedJobs = jobData.jobs.map(job => ({
+    company: job.company_name,
+    description: job.description,
+    location: job.location,
+    remote: job.remote,
+    source: 'codepen',
+    tags: [],
+    title: job.title,
+    uniqueId: job.hashid,
+    url: job.url,
+    originalRecord: job
+  }));
+  return formattedJobs;
+}
+
+export async function getWorkingNomadsJobs() {
+  const jobData = await fetchFromUrl(
+    'https://www.workingnomads.co/api/exposed_jobs/'
+  );
+  const formattedJobs = jobData.jobs.map(job => ({
+    company: job.company_name,
+    description: job.description,
+    location: job.location,
+    remote: null,
+    source: 'workingNomads',
+    tags: job.tags.split(','),
+    title: job.title,
+    uniqueId: job.pub_date,
+    url: job.url,
+    originalRecord: job
+  }));
+  return formattedJobs;
 }
 
 export function useSystemJobs() {
