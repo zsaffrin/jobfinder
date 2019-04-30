@@ -12,7 +12,8 @@ const LiveJobs = ({ user }) => {
     setIsLoadingLiveJobs(true);
     getAllJobs()
       .then(res => {
-        setLiveJobs(res);
+        const jobs = processJobs(res);
+        setLiveJobs(jobs);
         setIsLoadingLiveJobs(false);
       })
       .catch(err => {
@@ -23,8 +24,18 @@ const LiveJobs = ({ user }) => {
   const isJobNew = job =>
     systemJobs.filter(sysJob => sysJob.uniqueId === job.uniqueId).length === 0;
 
-  const newJobs = liveJobs.filter(job => isJobNew(job));
-  const recognizedJobs = liveJobs.filter(job => !isJobNew(job));
+  const processJobs = jobs =>
+    jobs.reduce((acc, job) => {
+      if (isJobNew(job)) {
+        job.isNew = true;
+        job.firstSeen = new Date();
+      }
+
+      return [job, ...acc];
+    }, []);
+
+  const newJobs = liveJobs.filter(job => job.isNew);
+  const recognizedJobs = liveJobs.filter(job => !job.isNew);
 
   return (
     <div>
