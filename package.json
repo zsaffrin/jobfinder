@@ -3,7 +3,7 @@
   "version": "0.4.0",
   "description": "Job listing manager",
   "scripts": {
-    "dev": "nodemon -r esm index.js"
+    "dev": "nodemon -r esm server.js"
   },
   "repository": {
     "type": "git",
@@ -14,5 +14,12 @@
   "bugs": {
     "url": "https://github.com/zsaffrin/jobfinder/issues"
   },
-  "homepage": "https://github.com/zsaffrin/jobfinder#readme"
+  "homepage": "https://github.com/zsaffrin/jobfinder#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.22",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.11"
+  }
 }
