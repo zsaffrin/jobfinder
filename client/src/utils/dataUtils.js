@@ -12,43 +12,7 @@ export async function fetchFromUrl(url) {
 }
 
 export async function getAllJobs() {
-  return [...(await getCodepenJobs()), ...(await getWorkingNomadsJobs())];
-}
-
-export async function getCodepenJobs() {
-  const jobData = await fetchFromUrl('https://codepen.io/jobs.json');
-  const formattedJobs = jobData.jobs.map(job => ({
-    company: job.company_name,
-    description: job.description,
-    location: job.location,
-    remote: job.remote,
-    source: 'codepen',
-    tags: [],
-    title: job.title,
-    uniqueId: job.hashid,
-    url: job.url,
-    originalRecord: job
-  }));
-  return formattedJobs;
-}
-
-export async function getWorkingNomadsJobs() {
-  const jobData = await fetchFromUrl(
-    'https://www.workingnomads.co/api/exposed_jobs/'
-  );
-  const formattedJobs = jobData.jobs.map(job => ({
-    company: job.company_name,
-    description: job.description,
-    location: job.location,
-    remote: null,
-    source: 'workingNomads',
-    tags: job.tags.split(','),
-    title: job.title,
-    uniqueId: job.pub_date,
-    url: job.url,
-    originalRecord: job
-  }));
-  return formattedJobs;
+  return fetchFromUrl('http://localhost:4382/api/jobs');
 }
 
 export function useSystemJobs() {
