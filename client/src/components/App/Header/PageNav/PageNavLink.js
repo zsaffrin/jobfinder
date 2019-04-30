@@ -11,7 +11,6 @@ const PageNavLink = ({ title, url }) => {
       align-items: center;
       padding: ${space.sm} ${space.md};
       text-decoration: none;
-
       &:hover {
         color: ${colors.blue[2]};
       }
