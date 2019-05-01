@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { useSystemJobs, getAllJobs } from '../../../../../utils/dataUtils';
+import {
+  useUserJobs,
+  getAllJobs,
+  saveNewSystemJob,
+  saveNewUserJob
+} from '../../../../../utils/dataUtils';
 import LoadingIcon from '../../../../shared/LoadingIcon';
 
 const LiveJobs = ({ user }) => {
   const [isLoadingLiveJobs, setIsLoadingLiveJobs] = useState(false);
   const [liveJobs, setLiveJobs] = useState([]);
 
-  const { jobs: systemJobs } = useSystemJobs();
+  const { jobs: userJobs } = useUserJobs(user.uid);
 
   const refreshLiveJobs = () => {
     setIsLoadingLiveJobs(true);
@@ -21,13 +26,17 @@ const LiveJobs = ({ user }) => {
       });
   };
 
+  const saveSystemJobs = () => {
+    saveNewSystemJob(liveJobs[0]);
+  };
+
   const isJobNew = job =>
-    systemJobs.filter(sysJob => sysJob.uniqueId === job.uniqueId).length === 0;
+    userJobs.filter(userJob => userJob.uniqueId === job.uniqueId).length === 0;
 
   const processJobs = jobs =>
     jobs.reduce((acc, job) => {
       if (isJobNew(job)) {
-        job.isNew = true;
+        job.isNew = isJobNew(job);
         job.firstSeen = new Date();
       }
 
@@ -55,6 +64,9 @@ const LiveJobs = ({ user }) => {
 
       <div>
         <button onClick={refreshLiveJobs}>Refresh Live Jobs</button>
+        {liveJobs.length > 0 && (
+          <button onClick={saveSystemJobs}>Save System Jobs</button>
+        )}
       </div>
     </div>
   );

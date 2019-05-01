@@ -19,7 +19,15 @@ export async function saveNewSystemJob(job) {
   console.info('Saving new system job...');
   const collectionRef = db.collection('jobs');
   const docRef = await collectionRef.add(job).catch(err => console.error(err));
-  console.info(`Document added with ID ${docRef.id}`);
+  console.info(`System job added with ID ${docRef.id}`);
+  return docRef;
+}
+
+export async function saveNewUserJob(job) {
+  console.info('Saving new system job...');
+  const collectionRef = db.collection('userjobs');
+  const docRef = await collectionRef.add(job).catch(err => console.error(err));
+  console.info(`User job added with ID ${docRef.id}`);
   return docRef;
 }
 
