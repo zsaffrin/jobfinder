@@ -15,11 +15,7 @@ const Jobs = () => {
     `;
   });
 
-  return (
-    <JobsPage>
-      <LiveJobs user={user} />
-    </JobsPage>
-  );
+  return <JobsPage>{user && <LiveJobs user={user} />}</JobsPage>;
 };
 
 export default Jobs;
