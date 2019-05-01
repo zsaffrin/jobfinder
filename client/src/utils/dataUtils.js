@@ -15,6 +15,14 @@ export async function getAllJobs() {
   return fetchFromUrl('http://localhost:4382/api/jobs');
 }
 
+export async function saveNewSystemJob(job) {
+  console.info('Saving new system job...');
+  const collectionRef = db.collection('jobs');
+  const docRef = await collectionRef.add(job).catch(err => console.error(err));
+  console.info(`Document added with ID ${docRef.id}`);
+  return docRef;
+}
+
 export function useSystemJobs() {
   const [jobs, setJobs] = useState([]);
   const [loadingJobs, setLoadingJobs] = useState(false);
