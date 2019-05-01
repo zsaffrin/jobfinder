@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useFirebaseAuth } from '../../../../../utils/authUtils';
 
 import LiveJobs from './LiveJobs';
-import WorkingJobs from './WorkingJobs';
 
 const Jobs = () => {
   const { user } = useFirebaseAuth();
@@ -19,7 +18,6 @@ const Jobs = () => {
   return (
     <JobsPage>
       <LiveJobs user={user} />
-      <WorkingJobs />
     </JobsPage>
   );
 };
